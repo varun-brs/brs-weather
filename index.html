@@ -1,0 +1,51 @@
+<!--
+Author:    Build Rise Shine with Nyros (BRS)
+Created:   11.05.2022
+Library / Component: Home page
+Description: Provided input field for searching about weather report
+(c) Copyright by BRS with Nyros.
+**/
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <title>Weather | Javascript</title>
+    <link rel="icon" href="http://203.193.173.125/buildriseshine/favicon.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="assets/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.google.com/" />
+  </head>
+
+  <body>
+    <main role="main" class="container pt-5">
+      <div class="input">
+        <input
+          type="text"
+          name="search"
+          class="input-search"
+          placeholder="Search for the city.."
+          autofocus
+        />
+      </div>
+      <div class="box">
+        <div class="location">
+          <div class="location-city"></div>
+          <div class="location-date"></div>
+        </div>
+        <div class="temperature">
+          <div class="temperature-temp"><span></span></div>
+          <div class="temperature-type"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/script.js"></script>
+  </body>
+</html>
