@@ -1,16 +1,9 @@
-/**
-Author:    Build Rise Shine with Nyros (BRS)
-Created:   11.05.2022
-Library / Component: Script file
-Description: Logic behind the app(fetching the data from the API)
-(c) Copyright by BRS with Nyros.
-**/
 window.onload = function () {
   document.querySelector(".input-search").value = "";
 };
 
 const api_details = {
-  url: "http://api.openweathermap.org/data/2.5/",
+  url: "https://api.openweathermap.org/data/2.5/",
   api_key: "60bbd59ec7556e88c0f6b5a2080aebaa",
 };
 
@@ -18,34 +11,52 @@ const input = document.querySelector(".input-search");
 input.addEventListener("keypress", showData);
 
 async function showResults(value) {
-  const data = await fetch(
-    `${api_details.url}weather?q=${value}&units=metric&APPID=${api_details.api_key}`
-  );
-  const fdata = await data.json();
-  if (fdata.message === "city not found") {
-    document.querySelector(".location-city").innerText = null;
-    document.querySelector(".location-date").innerText = null;
-    document.querySelector(".temperature-temp").innerHTML = null;
-    document.querySelector(".temperature-type").innerText = null;
-    document.getElementById("city_not_found")?.remove();
-    const ele = document.createElement("h2");
-    ele.className = "heady";
-    ele.setAttribute("id", "city_not_found");
-    ele.appendChild(document.createTextNode("City Not Found"));
-    const fff = document.querySelector(".temperature");
-    fff.appendChild(ele);
-  } else {
-    displayData(fdata);
+  try {
+    const data = await fetch(
+      `${api_details.url}weather?q=${value}&units=metric&APPID=${api_details.api_key}`
+    );
+    const fdata = await data.json();
+    if (fdata.message === "city not found") {
+      document.querySelector(".location-city").innerText = null;
+      document.querySelector(".location-date").innerText = null;
+      document.querySelector(".temperature-temp").innerHTML = null;
+      document.querySelector(".temperature-type").innerText = null;
+      document.getElementById("city_not_found")?.remove();
+      const ele = document.createElement("h2");
+      ele.className = "heady";
+      ele.setAttribute("id", "city_not_found");
+      ele.appendChild(document.createTextNode("City Not Found"));
+      const fff = document.querySelector(".temperature");
+      fff.appendChild(ele);
+    } else {
+      displayData(fdata);
+    }
+  } catch (error) {
+    console.log("error threee");
   }
 }
 
 function showData(e) {
+  const dummyCont = document.querySelector(".dummy-cont");
+  dummyCont.textContent = "";
   if (e.keyCode === 13) {
     showResults(input.value);
   }
 }
 
+function extraDetails(data) {
+  const dummyCont = document.querySelector(".dummy-cont");
+  const minTemp = document.createElement("h2");
+  minTemp.textContent = `Min-Temp : ${data.main.temp_min}`;
+  dummyCont.appendChild(minTemp);
+
+  const maxTemp = document.createElement("h2");
+  maxTemp.textContent = `Max-Temp : ${data.main.temp_max}`;
+  dummyCont.appendChild(maxTemp);
+}
+
 function displayData(data) {
+  console.log(data);
   document.getElementById("city_not_found")?.remove();
   const location_city = document.querySelector(".location-city");
   location_city.innerText = `${data.name},${data.sys.country}`;
@@ -85,10 +96,12 @@ function displayData(data) {
 		`;
   const type = document.querySelector(".temperature-type");
   type.innerText = `${data.weather[0].main}`;
+  const dummyCont = document.querySelector(".dummy-cont");
+  const btnEle = document.createElement("button");
+  btnEle.className = "btn-ele";
+  btnEle.textContent = "Know More";
+  btnEle.addEventListener("click", function () {
+    extraDetails(data);
+  });
+  dummyCont.appendChild(btnEle);
 }
-
-function setTheme(theme) {
-  document.documentElement.style.setProperty("--primary-color", theme);
-  localStorage.setItem("weather-theme", theme);
-}
-setTheme(localStorage.getItem("weather-theme") || "#1A4B84");

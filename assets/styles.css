@@ -18,6 +18,16 @@ body {
   /*background-color: green;*/
 }
 
+.btn-ele {
+  background-color: #991e14;
+  color: #ffffff;
+  width: 120px;
+  height: 35px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+}
+
 .container {
   display: flex;
   /*align-items: center;
